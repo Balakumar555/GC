@@ -1,1 +1,39 @@
-<p>advanced-reporting works!</p>
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-spin-clockwise"
+    [fullScreen]="true"
+    name="primarySpinner">
+    <p style="color: white">Loading...</p>
+  </ngx-spinner>
+<div class="px-3 black-clr">
+    <div class="mb-3 ps-0">
+        <div class="main-heading">
+            <div class="d-flex align-items-center gap-2">
+                <div>
+                    <section>
+                        <mat-tab-group [(selectedIndex)]="selectedTabIndex"> (selectedTabChange)="onClickTab($event)"
+                            <ng-container>
+                                <mat-tab label="Player Notes"></mat-tab>
+                                 <mat-tab label="Games"></mat-tab>
+                                  <mat-tab label="Offense"></mat-tab>
+                                   <mat-tab label="Defence"></mat-tab>
+                                    <mat-tab label="Special Notes"></mat-tab>
+                                     <mat-tab label="ST Formations"></mat-tab>
+                            </ng-container>
+                        </mat-tab-group>
+                    </section>
+                </div>
+
+            </div>
+
+        </div>
+        <section>
+            <ng-container *ngComponentOutlet="activeComponent; inputs: componentInputs">
+
+            </ng-container>
+        </section>
+    </div>
+
+</div>

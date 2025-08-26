@@ -1,0 +1,12 @@
+<!-- Backdrop overlay -->
+<div class="modal-backdrop" (click)="closeModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <button class="btn" (click)="closeModal()">X</button>
+    <div>
+      <div>Comments</div>  
+      <div>
+        <textarea name="comment" formControl="" placeholder="Enter your comments here..."></textarea>
+      </div>
+    </div>
+  </div>
+</div>

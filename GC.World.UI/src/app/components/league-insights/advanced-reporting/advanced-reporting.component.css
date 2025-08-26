@@ -1,0 +1,9 @@
+.advanced-reporting-container {
+  position: relative;
+  min-height: 300px;
+}
+
+/* Custom spinner styles if needed */
+.ngx-spinner-overlay {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
