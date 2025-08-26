@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { MatTabsModule } from '@angular/material/tabs';
+
 import { CommonModule } from '@angular/common';
-import {MatDialog} from '@angular/material/dialog'
+
 import { AddFormationComponent } from './add-formation/add-formation.component';
 
 @Component({
     selector: 'app-st-formations',
-    imports: [MatTabsModule, CommonModule],
+    standalone:true,
+    imports: [CommonModule],
     templateUrl: './st-formations.component.html',
     styleUrl: './st-formations.component.css'
 })
@@ -14,7 +15,7 @@ export class StFormationsComponent {
   selectedTabIndex: number = 0;
   currentFormationType: string = 'Kickoff';
 
-  constructor(private matDialog : MatDialog){
+  constructor(){
 
   }
   
@@ -77,15 +78,15 @@ export class StFormationsComponent {
     }
   }
 openAddFormationMoadl(){
-const dialog= this.matDialog.open(AddFormationComponent,{
-  disableClose: true,
-});
-dialog.afterClosed().subscribe(result =>{
-  if(result){
-    const formationData: any ={
+// const dialog= this.matDialog.open(AddFormationComponent,{
+//   disableClose: true,
+// });
+// dialog.afterClosed().subscribe(result =>{
+//   if(result){
+//     const formationData: any ={
       
-    }
-  }
-})
+//     }
+//   }
+// })
 }
 }

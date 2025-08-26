@@ -1,15 +1,5 @@
 <div class="formations-container">
-  <mat-tab-group
-    [(selectedIndex)]="selectedTabIndex"
-    (selectedTabChange)="onClickTab($event)"
-  >
-    <mat-tab *ngFor="let formation of formations" [label]="formation.label">
-      <ng-template matTabContent>
-       
-       
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+ 
   <ng-container>
     <div>
       <button  class="btn-custom btn btn-primary" (click)="openAddFormationMoadl()"></button>
