@@ -1,1 +1,20 @@
-<p>st-formations works!</p>
+<div class="formations-container">
+  <mat-tab-group
+    [(selectedIndex)]="selectedTabIndex"
+    (selectedTabChange)="onClickTab($event)"
+  >
+    <mat-tab *ngFor="let formation of formations" [label]="formation.label">
+      <ng-template matTabContent>
+       
+       
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+  <ng-container>
+    <div>
+      <button  class=" btn d-flex align-item-center" (click)="openAddFormationMoadl()"></button>
+      <span class="material-symbols-outlined fs_16">add</span>
+      <span class="font-semibol">Add Formation</span>
+    </div>
+  </ng-container>
+</div>
