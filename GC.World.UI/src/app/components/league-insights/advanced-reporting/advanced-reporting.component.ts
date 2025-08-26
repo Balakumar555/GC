@@ -1,15 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, isStandalone } from '@angular/core';
 import { StFormationsComponent } from './new-advance-report/st-formations/st-formations.component';
 import{ NgxSpinnerModule, NgxSpinner} from 'ngx-spinner';
-import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-advanced-reporting',
-  standalone: true,
-  imports: [NgxSpinnerModule, MatTabsModule,CommonModule],
-  templateUrl: './advanced-reporting.component.html',
-  styleUrl: './advanced-reporting.component.css'
+    selector: 'app-advanced-reporting',
+     standalone: true,
+    imports: [],
+    templateUrl: './advanced-reporting.component.html',
+    styleUrl: './advanced-reporting.component.css'
 })
 export class AdvancedReportingComponent {
 selectedTabIndex: number=0;

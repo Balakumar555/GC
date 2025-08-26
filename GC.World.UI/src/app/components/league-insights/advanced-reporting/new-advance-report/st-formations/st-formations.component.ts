@@ -5,11 +5,10 @@ import {MatDialog} from '@angular/material/dialog'
 import { AddFormationComponent } from './add-formation/add-formation.component';
 
 @Component({
-  selector: 'app-st-formations',
-  standalone: true,
-  imports: [MatTabsModule, CommonModule],
-  templateUrl: './st-formations.component.html',
-  styleUrl: './st-formations.component.css'
+    selector: 'app-st-formations',
+    imports: [MatTabsModule, CommonModule],
+    templateUrl: './st-formations.component.html',
+    styleUrl: './st-formations.component.css'
 })
 export class StFormationsComponent {
   selectedTabIndex: number = 0;
