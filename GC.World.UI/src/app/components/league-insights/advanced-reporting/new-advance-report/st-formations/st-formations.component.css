@@ -38,16 +38,7 @@
   color: #3f51b5;
   background-color: #e8eaf6;
 }
-.btn {
-  background-color: #007bff; /* Blue background */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+
 
 .btn:hover {
   background-color: #0056b3; /* Darker blue on hover */
@@ -56,4 +47,17 @@
 
 .btn:active {
   transform: translateY(1px);
+}
+btn-custom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(45deg, #4776E6, #8E54E9);
+    border: none;
+    color: white;
 }
