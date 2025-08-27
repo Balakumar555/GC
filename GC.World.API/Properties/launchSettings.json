@@ -3,17 +3,17 @@
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "index.html", 
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5281"
+      "applicationUrl": "http://localhost:5001"
     },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -21,10 +21,10 @@
     "WSL": {
       "commandName": "WSL2",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:5281/weatherforecast",
+      "launchUrl": "http://localhost:5001/index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "http://localhost:5281"
+        "ASPNETCORE_URLS": "http://localhost:5001"
       },
       "distributionName": ""
     }
@@ -34,8 +34,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:1226",
-      "sslPort": 44358
+      "applicationUrl": "http://localhost:5001",
+      "sslPort": 0
     }
   }
 }
