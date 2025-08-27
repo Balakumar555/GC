@@ -31,24 +31,26 @@ registerForm: FormGroup;
     { value: 'other', label: 'Other' }
   ];
 
-  constructor(private formBuilder: FormBuilder) {
-    this.registerForm = this.formBuilder.group({
+  constructor(private fb: FormBuilder) {
+    this.registerForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern(/^\+?[\d\s\-\(\)]+$/)]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', Validators.required],
+        password: [''],
+        confirmPassword: [''],
       dateOfBirth: ['', Validators.required],
-      gender: ['', Validators.required],
-      country: ['', Validators.required],
-      address: ['', Validators.required],
-      city: ['', Validators.required],
-      postalCode: ['', Validators.required],
-      agreeToTerms: [false, Validators.requiredTrue],
-      receiveNewsletter: [false],
-      preferredContact: ['email', Validators.required]
-    }, { validators: this.passwordMatchValidator });
+     gender: ['', Validators.required],
+       country: [''],
+       address: [''],
+       city: [''],
+      postalCode: [''],
+       agreeToTerms: [false],
+       receiveNewsletter: [false],
+       preferredContact: ['']
+    }, 
+    //{ validators: this.passwordMatchValidator }
+    );
   }
 
   ngOnInit(): void {}
@@ -65,14 +67,12 @@ registerForm: FormGroup;
     return null;
   }
 
-  // Getter for easy access to form fields
-  get f() { return this.registerForm.controls; }
-
   onSubmit() {
     this.submitted = true;
 
     // Stop if form is invalid
     if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
       console.log('Form is invalid');
       return;
     }

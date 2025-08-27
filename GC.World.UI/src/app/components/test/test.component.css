@@ -314,3 +314,17 @@ textarea.form-control {
     font-size: 1.75rem;
   }
 }
+error-border {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875em;
+  margin-top: 0.25rem;
+}
+
+.invalid-feedback.d-block {
+  display: block !important;
+}
