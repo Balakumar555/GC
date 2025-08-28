@@ -15,15 +15,25 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // add services
 
 builder.Services.AddScoped<IUser, UserRepo>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+                       builder => builder
+                      .AllowAnyOrigin()
+                      .AllowAnyHeader()
+                      .AllowAnyMethod()
+                      .WithMethods("GET", "PUT", "DELETE", "POST", "PATCH")
+                      );
+});
 
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "EAPI-CRM");
-    c.RoutePrefix = string.Empty; // Swagger will be at root: /
+    c.RoutePrefix = string.Empty;
 });
-
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
