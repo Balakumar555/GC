@@ -1,0 +1,302 @@
+<div class="d-flex justify-content-end mb-2" *ngIf="enableExport">
+  <button class="outline-btn" matTooltip="Export to Excel">
+    <span class="material-symbols-outlined fs_18 pointer">file_export</span>
+  </button>
+</div>
+
+<div class="t-container" [class.link-column]="hasLinkColumn" id="table-container" infinite-scroll
+  (scrolled)="onScroll()">
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.4)" color="#0085CF" size="default" [name]="'tabledata'" [fullScreen]="true"
+    type="line-scale">
+  </ngx-spinner>
+
+  <!-- Table -->
+  <!-- <div>
+        <i 
+        *ngIf="enableExport"
+        class="fas fa-file-excel export-icon" 
+        (click)="exportToExcel()" 
+        style="cursor: pointer; color: #217346; font-size: 24px;"
+        title="Export to Excel">
+      </i>
+    </div> -->
+  <table mat-table id="table" [dataSource]="tableDataSource" matSort (matSortChange)="sortTable($event)">
+    <!-- action column -->
+    <ng-container *ngIf="rowActionIcon?.length" [matColumnDef]="rowActionIcon ?? ''">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element" [id]="rowActionIcon" (click)="emitRowAction(element)">
+        <mat-icon class="pointer">visibility</mat-icon>
+      </td>
+    </ng-container>
+    <ng-container *ngIf="rowIcon?.length" [matColumnDef]="'actions'">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element;let i=index"
+        [class.disabled_delete]="rowIcon == 'delete' && tableDataSource.data[i]['scoutname'] === 'NFS' || !element['loggedInUserName']"
+        [class.last_checkbox]="lastTrueProspectIndex==i" [id]="'actions'">
+        <ng-container *ngFor="let icon of toArray(rowIcon)">
+          <span class="material-symbols-outlined fs_18 pointer me-2" (click)="emitRowAction(element, icon)"
+            *ngIf="icon === 'edit'">edit</span>
+          <!-- <span class="material-symbols-outlined fs_18 pointer" (click)="emitRowAction(element, icon)" *ngIf="icon === 'delete'">delete</span> -->
+          <span class="material-symbols-outlined fs_18 pointer" (click)="emitRowAction(element, icon)"
+            *ngIf="icon === 'delete' || (element['isDelete'])">delete</span>
+        </ng-container>
+
+
+        <!-- <span class="material-symbols-outlined fs_18 pointer" *ngIf="rowIcon == 'edit'">edit</span>
+        <span class="material-symbols-outlined fs_18 pointer"
+          *ngIf="rowIcon == 'delete'  && tableDataSource.data[i]['scoutname'] !== 'NFS' && element['loggedInUserName']">delete</span> -->
+      </td>
+    </ng-container>
+
+    <ng-container *ngFor="let tableColumn of tableColumns" [matColumnDef]="tableColumn.name">
+      <!-- if sortable column header -->
+      <ng-container *ngIf="tableColumn.isSortable; else notSortable">
+        <th mat-header-cell *matHeaderCellDef [mat-sort-header]="tableColumn.name"
+          [arrowPosition]="tableColumn.position === 'right' ? 'before' : 'after'">
+          {{ tableColumn.name }}
+        </th>
+      </ng-container>
+      <!-- else not sortable -->
+      <ng-template #notSortable>
+        <th mat-header-cell *matHeaderCellDef [class.text-align]="tableColumn.position">
+          {{ tableColumn.name }}
+        </th>
+      </ng-template>
+
+      <!-- column data -->
+      <td #editCellRef [attr.data-row-id]="getRowId(element)" [attr.data-cell-id]="i + '-' + tableColumn.dataKey"
+        [style.backgroundColor]="element.hexColor ? '#' + element.hexColor : ''"
+        [style.color]="element.hexColor ? '#27282D' : ''" mat-cell *matCellDef="let element; let i = index"
+        [class.last_checkbox]="lastTrueProspectIndex==i"
+        [ngClass]="{ 'active-row': element.player_Id === activePlayerId,'bg-color':isSelected==element}"
+        (click)="handleCellClick(element, tableColumn, i)"
+        [ngStyle]="element.isLink==='true' && tableColumn.name === 'Date' && tableColumn.isNFS==true ? { 'color': '#4DA6FF' } : {}"
+        [ngClass]="getClass(tableColumn.name)" [class.text-align]="tableColumn.position"
+        [ngClass]="{ 'active-row': element.workoutId === selectedWorkouId }" [ngClass]="element?.className">
+        <ng-container *ngIf="tableColumn.columnType === 'YorNcheckbox'">
+          <mat-checkbox [disabled]="tableColumn.disable" [checked]="element[tableColumn.dataKey] === 'y'"
+            (change)="emitRowAction(element,'checkbox',$event, tableColumn.dataKey)">
+          </mat-checkbox>
+        </ng-container>
+        <!-- <ng-container *ngIf="tableColumn.columnType === 'edittext'">
+          <span class="material-symbols-outlined fs_18 pointer" (click)="emitRowAction(element)" >edit</span>
+        </ng-container> -->
+        <ng-container *ngIf="tableColumn.columnType === 'static'">
+          <a class="pointer underline" (click)="emitRowAction(element)">
+            {{ element.evalId ? 'View' : '+Eval' }}
+          </a>
+        </ng-container>
+        <ng-container *ngIf="tableColumn.columnType === 'report'">
+          <a class="pointer underline" (click)="emitRowAction(element)">+ Add Report</a>
+        </ng-container>
+        <!-- <ng-container *ngIf="tableColumn.columnType === 'print'">
+          <a class="pointer underline">Print</a>
+        </ng-container> -->
+        <ng-container *ngIf="
+            editIndex == i && editField == tableColumn.dataKey;
+            else readMode
+          ">
+          <div>
+
+            <ng-container [ngSwitch]="tableColumn.columnType">
+              <mat-form-field class="w-100" *ngSwitchCase="'dropdown'">
+                <mat-select class="custom-select-2" [(ngModel)]="element[tableColumn.assignKey||tableColumn.dataKey]"
+                  (opened)="startEdit(i, element, tableColumn.dataKey)"
+                  (selectionChange)="stopEdit(i, tableColumn.dataKey)" (closed)="stopEdit(i, tableColumn.dataKey)">
+                  <mat-option *ngFor="let option of tableColumn.dropdownData" [value]="option.value">
+                    {{ option.label }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="custom-input w-100" *ngSwitchCase="'textbox'">
+                <input matInput [maxlength]="tableColumn.maxLength??150" [type]="tableColumn.textType || 'text'"
+                  [step]="tableColumn.textType=='number'?1:null" [(ngModel)]="element[tableColumn.dataKey]"
+                  (blur)="stopEdit(i, tableColumn.dataKey)" (input)="sanitizeLength($event, tableColumn)"
+                  (keydown)="blockDecimal($event, tableColumn)" />
+              </mat-form-field>
+              <mat-form-field class="custom-input w-100" *ngSwitchCase="'time'">
+                <input matInput type="time" [(ngModel)]="element[tableColumn.dataKey]"
+                  (blur)="stopEdit(i, tableColumn.dataKey)" />
+              </mat-form-field>
+            </ng-container>
+
+          </div>
+        </ng-container>
+        <ng-template #readMode>
+          <p class="d-flex align-items-center" (click)="emitRowAction(element)"
+            *ngIf="tableColumn.isLink; else default">
+            <!-- Render hyperlink or inner HTML content -->
+            <!-- <span [innerHTML]="element[tableColumn.key]"></span> -->
+            <span class="material-symbols-rounded me-1 gray-clr" *ngIf="isDraggable">drag_indicator</span>
+            <!-- <a><span class="dot" [ngClass]="element.rowStyle"></span>{{ element[tableColumn.dataKey]|dynamic :
+              tableColumn.pipe : tableColumn.pipeArgs ?? [] }}</a> -->
+            <a class="link-blue" (click)="onRowClickAction(element, 'linkClick', null, tableColumn.dataKey)">
+              <span [style.color]="element.isLink2==='true' ?  '#4DA6FF'  : ''" class="dot"
+                [ngClass]="element.rowStyle"></span>
+              {{ element[tableColumn.dataKey] | dynamic : tableColumn.pipe : tableColumn.pipeArgs ?? [] }}
+            </a>
+          </p>
+          <ng-container *ngIf="tableColumn.columnType === 'actions'">
+            <a class="pointer underline" (click)="emitRowAction(element,'view')">View</a>
+            <!-- &nbsp;|&nbsp;
+            <a class="pointer underline">Print</a> -->
+            <a class="pointer underline ms-3" [matMenuTriggerFor]="printMenu">Print</a>
+            <mat-menu #printMenu="matMenu" [overlapTrigger]="true">
+              <button mat-menu-item (click)="emitRowAction(element,'printFullBook')">
+                <span class="d-flex align-items-center">
+                  <span class="material-symbols-outlined me-2 fs_18">book_2</span>
+                  <span class="fs_12 font-regular">Full Book</span>
+                </span>
+              </button>
+              <button class="border-top" mat-menu-item (click)="emitRowAction(element,'printOffensiveCoachesBook')">
+                <span class="d-flex align-items-center" >
+                  <span class="material-symbols-outlined me-2 fs_18">book_2</span>
+                  <span class="fs_12 font-regular">Offensive Coaches Book</span>
+                </span>
+              </button>
+              <button class="border-top" mat-menu-item (click)="emitRowAction(element,'printDefensiveCoachesBook')">
+                <span class="d-flex align-items-center">
+                  <span class="material-symbols-outlined me-2 fs_18">book_2</span>
+                  <span class="fs_12 font-regular">Defensive Coaches Book</span>
+                </span>
+              </button>
+              <button class="border-top" mat-menu-item (click)="emitRowAction(element,'printSpecialTeamCoachesBook')">
+                <span class="d-flex align-items-center">
+                  <span class="material-symbols-outlined me-2 fs_18">book_2</span>
+                  <span class="fs_12 font-regular">Special Team Coaches Book</span>
+                </span>
+              </button>
+              <button class="border-top" mat-menu-item (click)="$event.stopPropagation()">
+                <div class="form-check form-switch custom-toggle">
+                  <input class="form-check-input pointer" #customBookSwitch type="checkbox" id="customBookSwitch"
+                    (change)="toggleCustomBook($event)">
+                  <label class="form-check-label fs_12 font-regular ms-1 pointer" for="customBookSwitch">Custom
+                    Book</label>
+                </div>
+              </button>
+              <ng-container *ngIf="customBookSwitch.checked">
+                <button class="custom-hook-checkboxes border-top" mat-menu-item (click)="$event.stopPropagation()">
+                  <mat-checkbox><span class="fs_12 font-regular">Select All</span></mat-checkbox>
+                </button>
+                <button class="custom-hook-checkboxes border-top" mat-menu-item *ngFor="let option of checkboxOptions"
+                  (click)="$event.stopPropagation()">
+                  <mat-checkbox [(ngModel)]="option.checked" [id]="option.id">
+                    <span class="fs_12 font-regular">{{ option.label }}</span>
+                  </mat-checkbox>
+                </button>
+
+                <div class="d-flex justify-content-end mt-2 border-top py-2" (click)="$event.stopPropagation()">
+                  <button class="outline-btn me-3" (click)="printMenu.close.emit()">
+                    Cancel
+                  </button>
+                  <button class="primary-btn" (click)="printMenu.close.emit()">
+                    Apply
+                  </button>
+                </div>
+              </ng-container>
+            </mat-menu>
+          </ng-container>
+          <ng-container *ngIf="tableColumn.columnType === 'actions'">
+            <a class="pointer underline" (click)="emitRowAction(element)"></a>
+          </ng-container>
+          <ng-template #default>
+            <!-- for draftday row selection -->
+            <p (click)="rowSelection(element)" *ngIf="tableColumn.isRowSelect">
+              <a>{{ element[tableColumn.dataKey] }} </a>
+            </p>
+            <p [style.white-space]="(tableColumn.wrapText || tableColumn.wrapText2 || tableColumn.wrapText3 || tableColumn.wrapText4 || tableColumn.wrapText5) ? 'pre-line' : ''"
+              [ngClass]="{
+              'customWidth': tableColumn.wrapText,
+              'customWidth2': tableColumn.wrapText2,
+              'customWidth3': tableColumn.wrapText3,
+              'customWidth4': tableColumn.wrapText4,
+              'customWidth5': tableColumn.wrapText5
+            }" [matTooltip]="element[tableColumn.dataKey]?.length > 30 ? element[tableColumn.dataKey] : ''" *ngIf="
+            tableColumn.columnType !== 'dropdown' && !tableColumn.isRowSelect && !tableColumn.isIcon && tableColumn.columnType !== 'checkbox' && tableColumn.columnType !== 'time' &&  tableColumn.columnType !== 'textbox' && tableColumn.columnType !== 'static' && tableColumn.columnType !== 'edittext' && tableColumn.columnType !== 'YorNcheckbox' && tableColumn.columnType!=='trend'
+              ">
+              {{
+              element
+              | dataPropertyGetter : tableColumn.dataKey
+              | dynamic : tableColumn.pipe : tableColumn.pipeArgs ?? []
+              }}
+
+            </p>
+            <div *ngIf="
+                tableColumn.columnType !== 'dropdown' && tableColumn.columnType !== 'time' && tableColumn.columnType !== 'checkbox'&& tableColumn.columnType !== 'textbox' && tableColumn.isIcon
+              ">
+              <mat-icon *ngIf="element[tableColumn.dataKey]"
+                class="primary-clr fs_18 d-flex align-items-center">task_alt</mat-icon>
+            </div>
+            <ng-container *ngIf="tableColumn.columnType == 'dropdown'">
+              <ng-container *ngIf="tableColumn.shouldRenderInput?.(element); else dropdownText">
+                <mat-form-field class="w-100">
+                  <mat-select class="w-100 custom-select-2"
+                    (selectionChange)="onDropdownChange($event.value, element, tableColumn)"
+                    [(ngModel)]="element[tableColumn.assignKey || tableColumn.dataKey]">
+                    <mat-option *ngFor="let option of tableColumn.dropdownData" [value]="option.value">
+                      {{ option.label }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </ng-container>
+              <ng-template #dropdownText>
+                {{ element[tableColumn.dataKey] }}
+              </ng-template>
+            </ng-container>
+            <ng-container *ngIf="tableColumn.columnType === 'textbox'">
+              <ng-container *ngIf="tableColumn.shouldRenderInput?.(element); else textboxText">
+                <mat-form-field class="custom-input w-100">
+                  <input matInput [maxlength]="tableColumn.maxLength??150" [type]="tableColumn.textType || 'text'"
+                    [step]="tableColumn.textType=='number'?1:null" (blur)="checkRowFinalization(element)"
+                    (input)="sanitizeLength($event, tableColumn)" (keydown)="blockDecimal($event, tableColumn)"
+                    [(ngModel)]="element[tableColumn.dataKey]" />
+                </mat-form-field>
+              </ng-container>
+              <ng-template #textboxText>
+                <div [style.whiteSpace]="tableColumn.wrapText === true ? 'pre-line' : ''"
+                  [class.customWidth]="tableColumn.wrapText === true"
+                  [matTooltip]="element[tableColumn.dataKey]?.length > 30 ? element[tableColumn.dataKey] : ''"> {{
+                  element[tableColumn.dataKey] }}</div>
+              </ng-template>
+            </ng-container>
+            <ng-container *ngIf="tableColumn.columnType === 'time'">
+              <ng-container *ngIf="tableColumn.shouldRenderInput?.(element); else textboxText">
+                <mat-form-field class="custom-input w-100">
+                  <input matInput type="time" (blur)="checkRowFinalization(element)"
+                    [(ngModel)]="element[tableColumn.dataKey]" />
+                </mat-form-field>
+              </ng-container>
+              <ng-template #textboxText>
+                {{ element[tableColumn.dataKey] }}
+              </ng-template>
+            </ng-container>
+            <ng-container *ngIf="tableColumn.columnType =='checkbox'">
+              <mat-checkbox (change)="emitRowAction(element,'',$event)"
+                [checked]="element[tableColumn.dataKey]"></mat-checkbox>
+
+
+            </ng-container>
+            <ng-container *ngIf="tableColumn.columnType === 'trend'">
+              <span [style.color]="element[tableColumn.dataKey]?.color">
+                <mat-icon> {{ element[tableColumn.dataKey]?.symbol }}</mat-icon>
+              </span>
+            </ng-container>
+          </ng-template>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr [class.player_cut_drag]="isDraggable" [style.cursor]="!isDraggable? 'inherit':''" mat-row
+      *matRowDef="let row; columns: displayedColumns" cdkDrag [cdkDragDisabled]="!isDraggable" cdkDragPreview
+      [class.last_checkbox]="false"></tr>
+  </table>
+  <div *ngIf="noRecord && !isLoading" class="text-center fs_12 gray-clr no-records">
+    No Records Found
+  </div>
+</div>
+
+<!-- Pagination -->
+<mat-paginator #matPaginator [length]="totalRecords" class="custom_table_pagination" [hidden]="!isPageable" [pageSize]="defaultPageSize" [pageSizeOptions]="paginationSizes"
+   (page)="paginateData($event)" [showFirstLastButtons]="true">
+</mat-paginator>

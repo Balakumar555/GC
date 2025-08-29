@@ -1,0 +1,305 @@
+.dark_table {
+  table {
+    background-color: #1b2333;
+    color: white;
+  }
+
+  .mat-header-row {
+    color: white;
+  }
+
+  .mat-mdc-header-row,
+  .mat-mdc-row {
+    color: white;
+  }
+
+  .mat-cell {
+    background-color: #1b2333;
+  }
+
+  .custom-paginator {
+    button {
+      background-color: #252f47;
+      color: var(--white);
+    }
+  }
+
+  th {
+    background-color: #030303 !important;
+  }
+
+  .mat-mdc-paginator {
+    background-color: unset;
+    color: white;
+  }
+
+  .custom_table_pagination .mat-mdc-text-field-wrapper {
+    .mat-mdc-select-trigger {
+      color: white;
+    }
+
+    .mat-mdc-select-arrow {
+      color: var(--white);
+    }
+
+    svg {
+      fill: white !important;
+    }
+  }
+}
+
+table {
+  width: 100%;
+  position: relative;
+ 
+  background: transparent;
+}
+
+.last_checkbox {
+  border-bottom: 4px solid var(--primaryColor) !important;
+}
+
+tbody tr:nth-child(even) {
+  background-color: var(--white);
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #edebeb;
+}
+
+.t-container {
+  height: calc(100vh - 250px);
+  overflow: auto;
+  border: 1px solid var(--offgray);
+}
+
+.green {
+  background-color: var(--green_clr);
+  color: white;
+}
+
+.mat-table {
+  width: 100%;
+  background-color: #1b2333;
+  color: white;
+  border-collapse: collapse;
+}
+
+.mat-header-row {
+  font-weight: bold;
+}
+
+thead tr {
+  background-color: var(--primaryColor);
+}
+
+.mat-row {
+  margin-bottom: 10px;
+}
+
+.mat-cell,
+.mat-header-cell {
+  padding: 16px;
+  border-bottom: 1px solid #3b4a5a;
+  white-space: nowrap;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.player-name {
+  font-weight: bold;
+  color: white;
+  width: 94px;
+}
+
+.player-age {
+  color: #00b1ff;
+  font-size: 0.9em;
+}
+
+
+
+mat-label {
+  font-size: 12px;
+}
+
+.custom-paginator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  font-size: 12.64px;
+
+  button {
+    margin: 0 10px;
+    padding: 0 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 30px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+}
+
+th,
+td {
+  font-size: 12px;
+  font-family: "Trade Gothic Next LT Pro", "Roboto", sans-serif !important;
+
+  p {
+    font-size: 12px;
+    font-family: "Trade Gothic Next LT Pro", "Roboto", sans-serif !important;
+
+    a {
+      font-family: "Trade Gothic Next LT Pro", "Roboto", sans-serif !important;
+    }
+  }
+
+ 
+}
+
+tbody td {
+  &:first-child {
+    background-color: #deebf2 !important;
+  }
+}
+
+.checkbox {
+  .mdc-data-table__row .mat-mdc-cell {
+    pointer-events: visible !important;
+  }
+
+}
+
+.bg-color {
+  background-color: rgb(95, 214, 95);
+  color: white;
+}
+
+th {
+  background-color: var(--tableHeader) !important;
+  color: var(--black);
+  font-family: "Trade Gothic Next LT Pro SemiBold", "Roboto", sans-serif !important;
+
+ 
+}
+
+::ng-deep.custom_table_pagination .mat-mdc-text-field-wrapper {
+  border-radius: 6px;
+  border: 1px solid;
+  border-radius: 4px;
+
+ 
+}
+
+
+
+::ng-deep.pagination_dark .mat-mdc-text-field-wrapper {
+  .mat-mdc-select-trigger {
+    color: var(--white);
+  }
+
+  .mat-mdc-select-arrow {
+    color: var(--white);
+  }
+
+  svg {
+    fill: var(--white) !important;
+  }
+}
+
+::ng-deep.pagination_dark {
+  color: var(--white);
+
+  svg {
+    fill: var(--white) !important;
+  }
+}
+
+
+
+.active-row:first-child {
+  color: white !important;
+  background-color: var(--primaryColor) !important;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 5px;
+  margin-right: 5px;
+
+  &.red_dot {
+    background-color: #f30000;
+  }
+
+  &.green_dot {
+    background-color: #06a501;
+  }
+
+  &.yellow_dot {
+    background-color: var(--yellowColor);
+  }
+
+  &.blue_dot {
+    background-color: blue;
+  }
+
+  &.black_dot {
+    background-color: var(--black);
+  }
+
+  &.orange_dot {
+    background-color: orange;
+  }
+}
+
+.customWidth {
+  width: 410px;
+  word-break: break-all;
+}
+
+.customWidth2 {
+  width: 800px;
+  word-break: break-all;
+}
+
+.form-check-input {
+  margin-top: 6px !important;
+}
+
+.custom-hook-checkboxes {
+  min-height: 30px !important;
+}
+
+.customWidth3 {
+  width: 100px;
+  word-break: break-all;
+}
+
+.customWidth4 {
+  width: 600px;
+  word-break: break-all;
+}
+
+.customWidth5 {
+  width: 360px;
+  word-break: break-all;
+}
+
+.disabled_delete {
+  
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.underline {
+  border-bottom: 1px solid var(--primaryColor);
+}
