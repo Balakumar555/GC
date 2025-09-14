@@ -13,7 +13,7 @@ const routes = {
 })
 export class UserService {
   constructor(private http: HttpClient) {}
-  getUsers(): Observable<any[]> {
+  getUsers(): Observable<any> {
     return this.http
       .get<any[]>(routes.getUsers());
       //.pipe(map((response) => response));

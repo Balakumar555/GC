@@ -93,9 +93,9 @@ interface CheckboxOption {
     MatMenuModule,
     MatButtonModule
   ],
-  providers: [],
+  providers: [DynamicPipe],
   templateUrl: './panthers-table.component.html',
-  styleUrl: './panthers-table.component.scss',
+  styleUrl: './panthers-table.component.css',
 })
 
 export class PanthersTableComponent implements OnInit, AfterViewInit {

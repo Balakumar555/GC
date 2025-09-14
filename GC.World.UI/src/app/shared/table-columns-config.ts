@@ -31,25 +31,32 @@ export interface TableColumn {
   canEdit?: (row: any) => boolean;
 }
 
-export const userColumns: TableColumn[] = [
+export const userListColumns: TableColumn[] = [
   {
     name: 'Name',
     dataKey: 'name',
     position: 'left',
+    isSortable: false,
+    iscss: false,
+    columnType:'',
+    isFilter: false
   },
     {
     name: 'Email',
     dataKey: 'email',
     position: 'left',
-  },
-    {
-    name: 'Date of Birth',
-    dataKey: 'dob',
-    position: 'left',
+     isSortable: false,
+    iscss: false,
+    columnType:'',
+    isFilter: false
   },
     {
     name: 'Gender',
     dataKey: 'gender',
     position: 'left',
+     isSortable: false,
+    iscss: false,
+    columnType:'',
+    isFilter: false
   },
 ];
