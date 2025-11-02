@@ -1,0 +1,46 @@
+<div>
+  <h2>Add New Player</h2>
+  <form #playerForm="ngForm" (ngSubmit)="savePlayers(playerForm)">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="name"
+        #nameModel="ngModel"
+        required
+        class="form-control"
+      />
+      <div *ngIf="nameModel.invalid && nameModel.touched" class="error">
+        Name is required
+      </div>
+
+      <label for="jsyNumber">Jersey Number:</label>
+      <input
+        type="text"
+        id="jsyNumber"
+        name="jsyNumber"
+        [(ngModel)]="jsyNumber"
+        #jsyNumberModel="ngModel"
+        required
+        class="form-control"
+      />
+      <div
+        *ngIf="jsyNumberModel.invalid && jsyNumberModel.touched"
+        class="error"
+      >
+        Jersey Number is required
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="playerForm.invalid"
+      class="btn btn-primary"
+    >
+      Save Player
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="closeDialog()">Cancel</button>
+  </form>
+</div>

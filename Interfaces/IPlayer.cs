@@ -4,7 +4,7 @@ namespace Interfaces
 {
     public interface IPlayer
     {
-        Task<bool> InsertUpdate(List<Player> players);
+        Task<bool> InsertUpdate(Player players);
         Task<List<Player>> GetUsers();
     }
 }

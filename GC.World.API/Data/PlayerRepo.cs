@@ -17,10 +17,9 @@ namespace GC.World.API.Data
             return await dbContext.players.ToListAsync();
         }
 
-        public async Task<bool> InsertUpdate(List<Player> players)
+        public async Task<bool> InsertUpdate(Player player)
         {
-            foreach (var player in players)
-            {
+           
                 if (player.Id == 0)
                 {
                     await dbContext.players.AddAsync(player);
@@ -42,8 +41,7 @@ namespace GC.World.API.Data
                         // You might want to add it or throw an exception
                         await dbContext.players.AddAsync(player);
                     }
-                }
-            }
+                }           
 
             await dbContext.SaveChangesAsync();
             return true;

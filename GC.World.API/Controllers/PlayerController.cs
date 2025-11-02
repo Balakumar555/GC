@@ -21,7 +21,7 @@ namespace GC.World.API.Controllers
             return Ok(data);
         }
         [HttpPost("SavePlayers")]
-        public async Task<IActionResult> SavePlayers(List<Player> players)
+        public async Task<IActionResult> SavePlayers(Player players)
         {
             var response = await _player.InsertUpdate(players);
             return Ok(response);
