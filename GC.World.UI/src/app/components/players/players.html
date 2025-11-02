@@ -1,0 +1,18 @@
+<div class="container">
+  <!-- Header with title and button -->
+  <div class="header-container">
+    <h2 class="page-title">Players</h2>
+    <button class="btn btn-primary" (click)="addPlayer()">
+      <span class="button-icon">+</span>
+      Add Player
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-container pt-2 pb-3 px-3">
+    <panthers-table 
+      [tableColumns]="playerListColumns" 
+      [tableData]="playerData">
+    </panthers-table>
+  </div>
+</div>

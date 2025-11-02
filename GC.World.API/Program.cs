@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // add services
 
 builder.Services.AddScoped<IUser, UserRepo>();
+builder.Services.AddScoped<IPlayer, PlayerRepo>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",

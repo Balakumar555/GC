@@ -12,5 +12,6 @@ export const routes: Routes = [
     {path:'', component: LoginComponent},
     {path:'advance-reporting',component: AdvancedReportingComponent},
     {path:'test',component: TestComponent},
-    {path: 'users', component: UserComponent}
+    {path: 'users', component: UserComponent},
+    {path: 'players', loadComponent: () => import('./components/players/players').then(m => m.Players)},
 ];

@@ -21,7 +21,6 @@ export class UserComponent {
   }
   
   getUsers(){
-    debugger;
     this.userService.getUsers().subscribe({
       next: (data) =>{
         this.userData = data;

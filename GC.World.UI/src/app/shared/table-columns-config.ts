@@ -21,11 +21,9 @@ export interface TableColumn {
   pipe?: any;
   isIcon?: any;
   isRowSelect?: any;
-  isNFS?:any;
+  isNFS?: any;
   disable?: any;
   isSortable?: any;
-
-
 
   shouldRenderInput?: (row: any) => boolean;
   canEdit?: (row: any) => boolean;
@@ -38,25 +36,54 @@ export const userListColumns: TableColumn[] = [
     position: 'left',
     isSortable: false,
     iscss: false,
-    columnType:'',
-    isFilter: false
+    columnType: '',
+    isFilter: false,
   },
-    {
+  {
     name: 'Email',
     dataKey: 'email',
     position: 'left',
-     isSortable: false,
+    isSortable: false,
     iscss: false,
-    columnType:'',
-    isFilter: false
+    columnType: '',
+    isFilter: false,
   },
-    {
+  {
     name: 'Gender',
     dataKey: 'gender',
     position: 'left',
-     isSortable: false,
+    isSortable: false,
     iscss: false,
-    columnType:'',
-    isFilter: false
+    columnType: '',
+    isFilter: false,
+  },
+];
+export const playerColumns: TableColumn[] = [
+  {
+    name: 'Id',
+    dataKey: 'id',
+    position: 'left',
+    isSortable: false,
+    iscss: false,
+    columnType: '',
+    isFilter: false,
+  },
+  {
+    name: 'Name',
+    dataKey: 'name',
+    position: 'left',
+    isSortable: false,
+    iscss: false,
+    columnType: '',
+    isFilter: false,
+  },
+  {
+    name: 'Jsy',
+    dataKey: 'jsyNumber',
+    position: 'left',
+    isSortable: false,
+    iscss: false,
+    columnType: '',
+    isFilter: false,
   },
 ];

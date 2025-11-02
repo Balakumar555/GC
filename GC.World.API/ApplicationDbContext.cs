@@ -14,5 +14,6 @@ namespace GC.World.API
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<AppUser> appUsers { get; set; }
+        public DbSet<Player> players { get; set; }
     }
 }
