@@ -12,7 +12,7 @@
   <div class="table-container pt-2 pb-3 px-3">
     <panthers-table 
       [tableColumns]="playerListColumns" 
-      [tableData]="playerData">
+      [tableData]="playerData" [isPageable]="true" [isSortable]="true" [isFilterable]="true" rowIcon="edit" (rowAction)="rowAction($event)">
     </panthers-table>
   </div>
 </div>

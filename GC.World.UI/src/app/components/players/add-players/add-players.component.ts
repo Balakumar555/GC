@@ -18,7 +18,6 @@ export class AddPlayersComponent {
   ) {}
 
   savePlayers(playerForm: any) {
-    debugger;
     if (playerForm.valid) {
       const playerData = playerForm.value;
       console.log('Player Data:', playerData);

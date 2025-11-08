@@ -59,8 +59,10 @@ export class Players {
     dialogRef.afterClosed().subscribe(result => {
              this.loadPlayers();
       
-    });
-     
-    
+    });  
+  }
+  rowAction(event: any) {
+ 
+    console.log('Cell clicked:', event);
   }
 }
