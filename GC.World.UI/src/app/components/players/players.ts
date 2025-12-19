@@ -40,20 +40,10 @@ export class Players {
       }
     );
   }
-  addPlayer() {
-    const newPlayer = {
-      name: 'New Player',
-      position: 'Position',
-      team: 'Team',
-      age: 0,
-      salary: 0,
-    };
-    this.playerData = [...this.playerData, newPlayer];
-  }
    openAddPlayerPopup() :void {
     const dialogRef = this.dialog.open(AddPlayersComponent, {
       width: '400px',
-      maxHeight: '600px',
+      height: '250px',
       data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
