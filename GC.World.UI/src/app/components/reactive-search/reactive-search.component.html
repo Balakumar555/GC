@@ -1,0 +1,43 @@
+<div class="search-container">
+  <input 
+    [formControl]="searchControl" 
+    type="text" 
+    placeholder="Search products..."
+    class="search-input"
+  >
+  
+  @if (loading) {
+    <div class="loading">
+      Searching...
+    </div>
+  }
+  
+  @if (error) {
+    <div class="error">
+      {{ error }}
+    </div>
+  }
+  
+  @if (products.length > 0) {
+    <div class="results">
+      <h3>Search Results ({{ products.length }})</h3>
+      <ul>
+        @for (product of products; track product.id) {
+          <li class="product-item">
+            <h4>{{ product.title }}</h4>
+            <p>{{ product.description }}</p>
+            <p><strong>Price:</strong> ${{ product.price }}</p>
+            <p><strong>Brand:</strong> {{ product.brand }}</p>
+            <p><strong>Category:</strong> {{ product.category }}</p>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+  
+  @if (searchControl.value && products.length === 0 && !loading && !error) {
+    <div class="no-results">
+      No products found for "{{ searchControl.value }}"
+    </div>
+  }
+</div>

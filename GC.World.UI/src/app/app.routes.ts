@@ -14,4 +14,5 @@ export const routes: Routes = [
     {path:'test',component: TestComponent},
     {path: 'users', component: UserComponent},
     {path: 'players', loadComponent: () => import('./components/players/players').then(m => m.Players)},
+    {path: 'reactive-search', loadComponent: () => import('./components/reactive-search/reactive-search.component').then(m => m.ReactiveSearchComponent)},
 ];
